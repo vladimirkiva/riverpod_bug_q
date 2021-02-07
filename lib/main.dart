@@ -101,6 +101,7 @@ class MyHomePage extends ConsumerWidget {
             if (model.value() > 5) ...[
               DirectWidget()
             ],
+            Text('Press "increment" more then 5 times (say, 7) and then press "refresh page" to get exception'),
           ],
         ),
       ),
