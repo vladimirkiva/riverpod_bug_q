@@ -16,7 +16,6 @@ class User {
 }
 
 class UsersListState extends SuggestCompatibleState<User> {
-  int _counter = 0;
   Map<String, User> _users = Map();
 
   @override
@@ -24,7 +23,6 @@ class UsersListState extends SuggestCompatibleState<User> {
 
   UsersListState copy() {
     return UsersListState()
-        .._counter = _counter
         .._users = _users
     ;
   }
@@ -98,7 +96,7 @@ class MyHomePage extends ConsumerWidget {
             ElevatedButton(onPressed: context.read(refreshProvider).refresh, child: Text('refresh page')),
             Text(model.value().toString()),
             GenericWidget(usersProvider),
-            if (model.value() > 5) ...[
+            if (model.value() > 0) ...[
               DirectWidget()
             ],
           ],
