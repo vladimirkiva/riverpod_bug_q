@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-// everything is simplified
 abstract class SuggestCompatibleState<T> {
 }
 
@@ -21,23 +20,15 @@ class UsersModel extends SuggestCompatibleModel<User, UsersListState> {
 
 final usersProvider = StateNotifierProvider<UsersModel>((_) => UsersModel());
 
-class MockWidget<T> {
-  final StateNotifierProvider<SuggestCompatibleModel<T, SuggestCompatibleState<T>>> _provider;
-
-  MockWidget(this._provider);
-
-  read(ProviderContainer container) {
-    container.read(_provider.state);
-  }
-}
-
 void main() {
-  test('Generic read', () {
+  test('Runtime exception', () {
     final container = ProviderContainer();
-    final MockWidget w = MockWidget(usersProvider);
-    w.read(container);
-    // Exception is thrown here. Expected to pass without exception
-    //  type 'StateNotifierStateProvider<SuggestCompatibleState<dynamic>>' is not a subtype of type 'StateNotifierStateProvider<UsersListState>' in type cast
+    final StateNotifierProvider<SuggestCompatibleModel<User, SuggestCompatibleState<User>>> _provider = usersProvider;
+
+    container.read(_provider.state);
+
+    // Exception is thrown at the next line. Expected to pass without exception
+    // type 'StateNotifierStateProvider<SuggestCompatibleState<dynamic>>' is not a subtype of type 'StateNotifierStateProvider<UsersListState>' in type cast
     container.read(usersProvider.state);
   });
 }
