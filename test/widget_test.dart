@@ -18,17 +18,18 @@ class UsersModel extends SuggestCompatibleModel<User, UsersListState> {
   UsersModel() : super(UsersListState());
 }
 
-final usersProvider = StateNotifierProvider<UsersModel>((_) => UsersModel());
+final usersProvider = StateNotifierProvider<UsersModel, UsersListState>((_) => UsersModel());
 
 void main() {
   test('Runtime exception', () {
     final container = ProviderContainer();
-    final StateNotifierProvider<SuggestCompatibleModel<User, SuggestCompatibleState<User>>> _provider = usersProvider;
+    final StateNotifierProvider<SuggestCompatibleModel<User, SuggestCompatibleState<User>>, SuggestCompatibleState<User>> _provider = usersProvider;
 
-    container.read(_provider.state);
+    container.read(_provider);
+
 
     // Exception is thrown at the next line. Expected to pass without exception
     // type 'StateNotifierStateProvider<SuggestCompatibleState<dynamic>>' is not a subtype of type 'StateNotifierStateProvider<UsersListState>' in type cast
-    container.read(usersProvider.state);
+    container.read(usersProvider);
   });
 }
